@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pushkar Raj Yadav | iOS Developer</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      color: #222;
+      overflow-x: hidden;
+    }
+
+    /* Loading Animation */
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #2563eb;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      animation: bounce 2s infinite;
+    }
+
+    .scroll-indicator::before {
+      content: '↓';
+      font-size: 30px;
+      color: #fff;
+      opacity: 0.7;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      20%,
+      50%,
+      80%,
+      100% {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      40% {
+        transform: translateX(-50%) translateY(-10px);
+      }
+
+      60% {
+        transform: translateX(-50%) translateY(-5px);
+      }
+    }
+
+    /* HERO */
+    .hero {
+      height: 100vh;
+      background: url("https://images.pexels.com/photos/5716032/pexels-photo-5716032.jpeg?_gl=1*1xbkfd2*_ga*MTI2MTY3MDE0OC4xNzY3NjM4NDAz*_ga_8JE65Q40S6*czE3Njc2Mzg0MDMkbzEkZzEkdDE3Njc2Mzg1MDkkajM0JGwwJGgw") center / cover no-repeat fixed;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      animation: heroFadeIn 1.5s ease-out;
+    }
+
+    @keyframes heroFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(1.1);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    .hero-content {
+      position: relative;
+      text-align: center;
+      color: #fff;
+      z-index: 1;
+      animation: slideUpFadeIn 1s ease-out 0.3s both;
+    }
+
+    @keyframes slideUpFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-content h1 {
+      font-size: 80px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      animation: textGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes textGlow {
+
+      0%,
+      100% {
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.1);
+      }
+
+      50% {
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 255, 255, 0.3);
+      }
+    }
+
+    .hero-content h1 span {
+      color: #ffffff;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 2px 10px rgba(0, 0, 0, 0.5);
+      font-weight: 800;
+    }
+
+    .hero-content p {
+      margin-top: 15px;
+      letter-spacing: 4px;
+      font-size: 28px;
+      color: #ffffff;
+      font-weight: 500;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      animation: slideUpFadeIn 1s ease-out 0.6s both;
+    }
+
+    /* SECTION */
+    .section-title {
+      text-align: center;
+      margin: 100px 0 80px 0;
+      font-weight: 700;
+      letter-spacing: 5px;
+      color: #2563eb;
+      font-size: 42px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease-out;
+      text-transform: uppercase;
+    }
+
+    .section-title.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* CONTAINER */
+    .container {
+      width: 1400px;
+      max-width: 95%;
+      margin: auto;
+      padding: 0 20px;
+    }
+
+    /* PROJECT */
+    .project {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 180px;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s ease-out;
+      padding: 40px;
+      border-radius: 20px;
+      background: #ffffff;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      gap: 40px;
+    }
+
+    .project.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .project:nth-child(even) {
+      transition-delay: 0.2s;
+    }
+
+    .project.reverse {
+      flex-direction: row-reverse;
+    }
+
+    .project-text {
+      width: 45%;
+      padding: 30px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .project:hover .project-text {
+      background: rgba(37, 99, 235, 0.05);
+      transform: translateX(5px);
+    }
+
+    .project.reverse:hover .project-text {
+      transform: translateX(-5px);
+    }
+
+    .project-text h3 {
+      font-size: 28px;
+      margin-bottom: 15px;
+      color: #1e293b;
+      font-weight: 700;
+      transition: color 0.3s ease;
+      line-height: 1.3;
+    }
+
+    .project-text h3 small {
+      font-size: 16px;
+      color: #64748b;
+      font-weight: 500;
+      margin-left: 8px;
+      display: inline-block;
+    }
+
+    .project:hover .project-text h3 {
+      color: #2563eb;
+    }
+
+    .project-text p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #334155;
+      font-weight: 400;
+      margin-bottom: 15px;
+    }
+
+    .project-text .label {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #2563eb;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    .project-text .label a {
+      color: #2563eb;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+      position: relative;
+    }
+
+    .project-text .label a::after {
+      content: '→';
+      margin-left: 5px;
+      transition: transform 0.3s ease;
+      display: inline-block;
+    }
+
+    .project-text .label a:hover {
+      color: #1d4ed8;
+      transform: translateX(5px);
+    }
+
+    .project-text .label a:hover::after {
+      transform: translateX(5px);
+    }
+
+    /* PHONES */
+    .project-images {
+      width: 45%;
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px;
+      flex-shrink: 0;
+      min-width: 500px;
+    }
+
+    .phone {
+      width: 220px;
+      height: 440px;
+      min-width: 220px;
+      min-height: 440px;
+      background: #1a1a1a;
+      border: 8px solid #2a2a2a;
+      border-radius: 40px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+      overflow: hidden;
+      padding: 0;
+      transform-style: preserve-3d;
+      will-change: transform, opacity;
+      flex-shrink: 0;
+    }
+
+    .phone img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 32px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      z-index: 1;
+    }
+
+    .phone:hover {
+      transform: translateY(-15px) scale(1.08);
+      box-shadow: 0 35px 70px rgba(0, 0, 0, 0.5),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.15);
+      filter: brightness(1.1);
+    }
+
+    .phone:nth-child(2) {
+      transition-delay: 0.1s;
+    }
+
+    .phone::after {
+      content: "";
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70px;
+      height: 22px;
+      background: #1a1a1a;
+      border-radius: 11px;
+      z-index: 12;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .tech-section {
+      padding: 120px 0 100px;
+      text-align: center;
+      background: linear-gradient(180deg, #ffffff 0%, #f8f9ff 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tech-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .tech-title {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease-out;
+    }
+
+    .tech-title.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .tech-subtitle {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #777;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease-out;
+    }
+
+    .tech-subtitle.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .tech-grid {
+      margin-top: 80px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 80px 60px;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .tech-item {
+      opacity: 0;
+      transform: scale(0.8) translateY(20px);
+      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .tech-item.visible {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    .tech-item img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      filter: grayscale(20%);
+    }
+
+    .tech-item:hover img {
+      transform: scale(1.2) rotate(5deg);
+      filter: grayscale(0%);
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 15px;
+      }
+
+      .section-title {
+        font-size: 28px;
+        margin: 60px 0 50px 0;
+        letter-spacing: 3px;
+      }
+
+      .tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px 20px;
+        margin-top: 50px;
+      }
+
+      .project {
+        flex-direction: column;
+        gap: 30px;
+        margin-bottom: 100px;
+        padding: 25px 15px;
+      }
+
+      .project.reverse {
+        flex-direction: column;
+      }
+
+      .project-text {
+        width: 100%;
+        padding: 0;
+      }
+
+      .project-text h3 {
+        font-size: 24px;
+      }
+
+      .project-text p {
+        font-size: 15px;
+      }
+
+      .project-images {
+        width: 100%;
+        min-width: auto;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 0;
+        overflow-x: visible;
+      }
+
+      .phone {
+        width: 160px;
+        height: 320px;
+        min-width: 160px;
+        min-height: 320px;
+        border-width: 6px;
+        border-radius: 32px;
+      }
+
+      .phone::after {
+        width: 50px;
+        height: 18px;
+        border-radius: 9px;
+        top: 8px;
+      }
+
+      .phone img {
+        border-radius: 26px;
+      }
+
+      .hero-content h1 {
+        font-size: 42px;
+      }
+
+      .hero-content p {
+        font-size: 18px;
+        letter-spacing: 2px;
+      }
+
+      .tech-item img {
+        width: 50px;
+        height: 50px;
+      }
+
+      .tech-section {
+        padding: 80px 0 60px;
+      }
+
+      .tech-title {
+        font-size: 28px;
+      }
+
+      .tech-subtitle {
+        font-size: 12px;
+      }
+
+      .footer {
+        height: 350px;
+      }
+
+      .footer-content {
+        padding: 20px;
+      }
+
+      .footer-content img {
+        width: 120px;
+        height: 120px;
+      }
+
+      .footer-content p {
+        font-size: 12px;
+        padding: 0 15px;
+      }
+
+      .social-links {
+        gap: 15px;
+      }
+
+      .social-links a {
+        width: 35px;
+        height: 35px;
+      }
+
+      .social-links img {
+        width: 20px;
+        height: 20px;
+      }
+
+      .cv-link {
+        font-size: 12px;
+        padding: 6px 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-content h1 {
+        font-size: 32px;
+      }
+
+      .hero-content p {
+        font-size: 14px;
+        letter-spacing: 1px;
+      }
+
+      .section-title {
+        font-size: 22px;
+        margin: 50px 0 40px 0;
+      }
+
+      .project {
+        padding: 20px 10px;
+        margin-bottom: 80px;
+      }
+
+      .project-text h3 {
+        font-size: 20px;
+      }
+
+      .project-text p {
+        font-size: 14px;
+      }
+
+      .phone {
+        width: 140px;
+        height: 280px;
+        min-width: 140px;
+        min-height: 280px;
+      }
+
+      .project-images {
+        gap: 15px;
+      }
+    }
+
+    /* FOOTER */
+    .footer {
+      height: 400px;
+      background: url("https://images.unsplash.com/photo-1522199755839-a2bacb67c546") center / cover no-repeat fixed;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .footer-content {
+      position: relative;
+      color: #fff;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .footer-content img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      border: 4px solid #fff;
+      object-fit: cover;
+      display: block;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .footer-content img:hover {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .footer-content p {
+      font-size: 13px;
+      max-width: 500px;
+      text-align: center;
+      opacity: 0.85;
+      margin-bottom: 20px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .social-links a:hover {
+      background: rgba(255, 255, 255, 0.4);
+      transform: scale(1.15) rotate(5deg);
+      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .social-links img {
+      width: 24px;
+      height: 24px;
+      border: none;
+      border-radius: 0;
+      margin: 0;
+      object-fit: contain;
+    }
+
+    .cv-link {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 20px;
+      background: #ff4444;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 1px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .cv-link:hover {
+      background: #ff6666;
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4);
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="loader">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1><span>PUSHKAR</span> RAJ YADAV</h1>
+      <p>SENIOR iOS DEVELOPER</p>
+    </div>
+    <div class="scroll-indicator"></div>
+  </section>
+
+  <h3 class="section-title">PORTFOLIO</h3>
+
+  <div class="container">
+
+    <!-- SpamSafe -->
+    <div class="project">
+      <div class="project-text">
+        <h3>SpamSafe <small>(Dec 2024 – Present)</small></h3>
+        <p>
+          SpamSafe helps users take control of their phone by identifying callers,
+          blocking spam calls, and providing detailed number insights for safer communication.
+        </p>
+        <div class="label"><strong>Responsibilities:</strong> App Development, Bug Fixing, R&D</div>
+        <div class="label">
+          <a href="https://apps.apple.com/in/app/spam-call-blocker-spamsafe/id6483862036" target="_blank">
+            View on App Store
+          </a>
+        </div>
+      </div>
+
+      <div class="project-images">
+        <div class="phone">
+          <img src="images/SPAMSAFE1.png" alt="SpamSafe Screenshot 1">
+        </div>
+        <div class="phone">
+          <img src="images/SPAMSAFE2.png" alt="SpamSafe Screenshot 2">
+        </div>
+      </div>
+    </div>
+
+    <!-- Goya -->
+    <div class="project reverse">
+      <div class="project-text">
+        <h3>Goya <small>(Jul 2024 – Dec 2024)</small></h3>
+        <p>
+          AI-powered image generation app allowing users to create images using
+          text prompts and uploads with a quota-based feature system.
+        </p>
+        <div class="label"><strong>Responsibilities:</strong> App Development, Bug Fixing, R&D</div>
+      </div>
+
+      <div class="project-images">
+        <div class="phone">
+          <img src="images/goya1.jpg" alt="Goya Screenshot 1">
+        </div>
+        <div class="phone">
+          <img src="images/goya2.jpg" alt="Goya Screenshot 2">
+        </div>
+      </div>
+    </div>
+
+    <!-- PhotoUp -->
+    <div class="project">
+      <div class="project-text">
+        <h3>PhotoUp! <small>(Jan 2024 – Jul 2024)</small></h3>
+        <p>
+          Advanced photo editing application offering filters, cutouts, reshaping,
+          blurring, frames, effects, stickers, emojis, and multi-image blending.
+        </p>
+        <div class="label"><strong>Responsibilities:</strong> App Development, Bug Fixing, R&D</div>
+        <div class="label">
+          <a href="https://apps.apple.com/us/app/photo-up-photo-editor-maker/id6473738848" target="_blank">
+            View on App Store
+          </a>
+        </div>
+      </div>
+
+      <div class="project-images">
+        <div class="phone">
+          <img src="images/PhotoUp1.png" alt="PhotoUp Screenshot 1">
+        </div>
+        <div class="phone">
+          <img src="images/PhotoUp2.png" alt="PhotoUp Screenshot 2">
+        </div>
+      </div>
+    </div>
+
+    <!-- United Pharmacy -->
+    <div class="project reverse">
+      <div class="project-text">
+        <h3>United Pharmacy <small>(Sept 2022 – Jan 2024)</small></h3>
+        <p>
+          Online pharmacy app providing medicines, insurance prescription uploads,
+          exclusive offers, and fast delivery within 3 hours.
+        </p>
+        <div class="label"><strong>Responsibilities:</strong> App Development, Bug Fixing</div>
+        <div class="label">
+          <a href="https://apps.apple.com/in/app/united-pharmacy/id1570643601" target="_blank">
+            View on App Store
+          </a>
+        </div>
+      </div>
+
+      <div class="project-images">
+        <div class="phone">
+          <img src="images/UnitedPharmacy1.PNG" alt="United Pharmacy Screenshot 1">
+        </div>
+        <div class="phone">
+          <img src="images/UnitedPharmacy2.PNG" alt="United Pharmacy Screenshot 2">
+        </div>
+      </div>
+    </div>
+
+    <!-- Apollo Neuro -->
+    <div class="project">
+      <div class="project-text">
+        <h3>Apollo Neuro <small>(Apr 2022 – Sept 2022)</small></h3>
+        <p>
+          Wearable-based wellness app designed to help manage stress and promote
+          a healthier lifestyle using gentle vibrations.
+        </p>
+        <div class="label"><strong>Responsibilities:</strong> App Development, Bug Fixing</div>
+        <div class="label">
+          <a href="https://apps.apple.com/in/app/apollo-neuro/id1457385148" target="_blank">
+            View on App Store
+          </a>
+        </div>
+      </div>
+
+      <div class="project-images">
+        <div class="phone">
+          <img src="images/apolloneuro.png" alt="Apollo Neuro Screenshot 1">
+        </div>
+        <div class="phone">
+          <img src="images/apolloneuro2.png" alt="Apollo Neuro Screenshot 2">
+        </div>
+      </div>
+    </div>
+
+    <!-- The WeedTube -->
+    <div class="project reverse">
+      <div class="project-text">
+        <h3>The Weed Tube <small>(Jun 2021 – Apr 2022)</small></h3>
+        <p>
+          Cannabis-focused social platform featuring real-time chat using Firebase,
+          media sharing, deep linking, online status, and remote config.
+        </p>
+        <div class="label"><strong>Responsibilities:</strong> App Development, Bug Fixing</div>
+        <div class="label">
+          <a href="https://apps.apple.com/in/app/theweedtube/id1459612181" target="_blank">
+            View on App Store
+          </a>
+        </div>
+      </div>
+
+      <div class="project-images">
+        <div class="phone">
+          <img src="images/weedtube1.png" alt="The WeedTube Screenshot 1">
+        </div>
+        <div class="phone">
+          <img src="images/weedtube2.png" alt="The WeedTube Screenshot 2">
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- TECH SECTION -->
+  <section class="tech-section">
+    <h2 class="tech-title">TECH.</h2>
+    <p class="tech-subtitle">techs and tools used to build great apps.</p>
+
+    <div class="container">
+      <div class="tech-grid">
+        <div class="tech-item">
+          <img src="https://img.icons8.com/color/96/000000/xcode.png" alt="Xcode">
+        </div>
+        <div class="tech-item">
+          <img src="https://img.icons8.com/color/96/000000/ios-logo.png" alt="iOS">
+        </div>
+        <div class="tech-item">
+          <img src="https://img.icons8.com/color/96/000000/git.png" alt="Git">
+        </div>
+        <div class="tech-item">
+          <img src="https://img.icons8.com/?size=100&id=81727&format=png&color=000000" alt="Azure">
+        </div>
+        <div class="tech-item">
+          <img src="https://img.icons8.com/?size=100&id=SIEfIYlCKlKD&format=png&color=000000" alt="Test Flight">
+        </div>
+        <div class="tech-item">
+          <img src="https://img.icons8.com/color/96/000000/firebase.png" alt="Firebase">
+        </div>
+        <div class="tech-item">
+          <img src="https://img.icons8.com/color/96/000000/google-maps-new.png" alt="Google Maps">
+        </div>
+        <div class="tech-item">
+          <img src="https://img.icons8.com/?size=100&id=12599&format=png&color=000000" alt="Github">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <section class="footer">
+    <div class="footer-content">
+      <img src="images/pushkarq.jpg" alt="Pushkar Raj Yadav">
+      <p>
+        Senior iOS Developer with 6+ years of experience building scalable
+        and high-performance mobile applications.
+      </p>
+      <div class="social-links">
+        <a href="https://in.linkedin.com/in/pushkar-raj-yadav-831aab144" target="_blank" title="LinkedIn">
+          <img src="https://img.icons8.com/color/48/000000/linkedin.png" alt="LinkedIn">
+        </a>
+        <a href="mailto:pushkaryadav1996@gmail.com" title="Email">
+          <img src="https://img.icons8.com/color/48/000000/gmail.png" alt="Email">
+        </a>
+      </div>
+      <a href="CV/PushkarResume.pdf" target="_blank" class="cv-link">CV</a>
+    </div>
+  </section>
+
+  <script>
+    // Hide loader when page is loaded
+    window.addEventListener('load', () => {
+      hideLoader();
+    });
+
+    // Safety timeout for loader (3 seconds max)
+    setTimeout(hideLoader, 3000);
+
+    function hideLoader() {
+      const loader = document.querySelector('.loader');
+      if (loader && !loader.classList.contains('hidden')) {
+        loader.classList.add('hidden');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Navbar scroll effect
+      const navbar = document.getElementById('navbar');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
+
+      // Scroll Animation Observer
+      const observerOptions = {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+
+            // Selection of children to stagger across all section types
+            const selector = '.phone, .project-text > *, .tech-item, .tech-title, .tech-subtitle';
+            const children = entry.target.querySelectorAll(selector);
+
+            children.forEach((child, index) => {
+              // Add a slight delay for each element for entrance
+              child.style.transitionDelay = `${index * 0.1}s`;
+              child.classList.add('visible');
+
+              // Remove delay after entrance so it doesn't affect interactions like hover
+              setTimeout(() => {
+                child.style.transitionDelay = '';
+              }, 1000 + (index * 100));
+            });
+          }
+        });
+      }, observerOptions);
+
+      // Observe all projects and headings
+      document.querySelectorAll('.project, .section-title, .tech-section').forEach(el => observer.observe(el));
+
+      // 3D Tilt Effect for Phones
+      const phones = document.querySelectorAll('.phone');
+
+      phones.forEach(phone => {
+        phone.addEventListener('mousemove', (e) => {
+          const rect = phone.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+
+          const rotateX = ((y - centerY) / centerY) * -12; // Max 12 deg
+          const rotateY = ((x - centerX) / centerX) * 12;
+
+          phone.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.04, 1.04, 1.04)`;
+        });
+
+        phone.addEventListener('mouseleave', () => {
+          phone.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+        });
+      });
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+
+          const target = document.querySelector(targetId);
+          if (target) {
+            const navHeight = navbar.offsetHeight;
+            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - (navHeight - 20);
+
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+
+      // Parallax effect for hero content
+      document.addEventListener('mousemove', (e) => {
+        const heroContent = document.querySelector('.hero-content');
+        if (heroContent) {
+          const x = (e.clientX / window.innerWidth - 0.5) * 20;
+          const y = (e.clientY / window.innerHeight - 0.5) * 20;
+          heroContent.style.transform = `translate(${x}px, ${y}px)`;
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>
